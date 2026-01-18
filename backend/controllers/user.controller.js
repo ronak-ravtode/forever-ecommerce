@@ -82,8 +82,26 @@ const registerUser = asyncHandler(async (req, res) => {
 })
 
 //Route for admin login
-const adminLogin = async (req, res) => {
+const adminLogin = asyncHandler(async (req, res) => {
+    const { email, password } = req.body
 
-}
+    if(!email || !password){
+        throw new ApiError(400, "All fields are required")
+    }
+
+    if(email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD){
+        throw new ApiError(400, "Invalid email or password")
+    }
+
+    const token = jwt.sign(email+password, process.env.JWT_SECRET)
+
+    if(!token){
+        throw new ApiError(500, "Internal server error")
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, "Admin logged in successfully", { token }))
+})
 
 export { loginUser, registerUser, adminLogin }
