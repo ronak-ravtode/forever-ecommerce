@@ -26,22 +26,22 @@ app.use('/api/product',productRouter)
 app.use('/api/cart',CartRouter)
 app.use('/api/order',orderRouter)
 
-app.use((req, res, next) => {
-    next(new ApiError(404, "Route not found"))
-})
+// app.use((req, res, next) => {
+//     next(new ApiError(404, "Route not found"))
+// })
 
-app.use((err, req, res, next) => {
-    const statusCode = err?.statusCode || 500
-    const message = err?.message || "Internal server error"
+// app.use((err, req, res, next) => {
+//     const statusCode = err?.statusCode || 500
+//     const message = err?.message || "Internal server error"
 
-    return res.status(statusCode).json({
-        success: false,
-        statusCode,
-        message,
-        errors: err?.errors || [],
-        data: null,
-    })
-})
+//     return res.status(statusCode).json({
+//         success: false,
+//         statusCode,
+//         message,
+//         errors: err?.errors || [],
+//         data: null,
+//     })
+// })
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
