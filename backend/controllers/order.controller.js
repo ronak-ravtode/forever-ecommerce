@@ -9,10 +9,10 @@ const deliveryCharge = 10;
 
 // Placing order using COD method
 const placeOrder = asyncHandler(async (req, res) => {
-    const { userId, items, amount, address } = req.body;
+    const { items, amount, address } = req.body;
 
     const orderData = {
-        userId,
+        userId: req.userId,
         items,
         address,
         amount,
@@ -24,7 +24,7 @@ const placeOrder = asyncHandler(async (req, res) => {
     const newOrder = await Order.create(orderData)
     await newOrder.save()
 
-    await User.findByIdAndUpdate(userId, { cartData: {} })
+    await User.findByIdAndUpdate(req.userId, { cartData: {} })
 
     res.status(200).json(new ApiResponse(200, "Order placed successfully", newOrder))
 })
@@ -37,8 +37,7 @@ const allOrders = asyncHandler(async (req, res) => {
 
 //Get user orders for frontend
 const userOrders = asyncHandler(async (req, res) => {
-    const { userId } = req.body;
-    const orders = await Order.find({ userId })
+    const orders = await Order.find({ userId: req.userId })
     res.status(200).json(new ApiResponse(200, "Orders fetched successfully", orders))
 })
 

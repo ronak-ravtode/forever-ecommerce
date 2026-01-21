@@ -4,7 +4,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const addToCart = asyncHandler(async(req, res) => {
-    const {userId,itemId,size} = req.body
+    const {itemId,size} = req.body
+    const userId = req.userId
     const userData = await User.findById(userId)
     if(!userData){
         throw new ApiError(404,"User not found")
@@ -27,7 +28,8 @@ const addToCart = asyncHandler(async(req, res) => {
 })
 
 const updateCart = asyncHandler(async(req, res) => {
-    const {userId,itemId,size,quantity} = req.body
+    const {itemId,size,quantity} = req.body
+    const userId = req.userId
 
     const userData = await User.findById(userId)
     let cartData = userData.cartData
@@ -37,7 +39,7 @@ const updateCart = asyncHandler(async(req, res) => {
 })
 
 const getCart = asyncHandler(async(req, res) => {
-    const {userId} = req.body
+    const userId = req.userId
     const userData = await User.findById(userId)
     let cartData = userData.cartData
     res.status(200).json(new ApiResponse(200,"Cart fetched successfully",cartData))
