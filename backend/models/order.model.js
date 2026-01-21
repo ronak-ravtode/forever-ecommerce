@@ -34,10 +34,6 @@ const orderSchema = new mongoose.Schema({
     date:{
         type:Number,
         required:true  
-    },
-    razorpay_order_id:{
-        type:String,
-        required:false
     }
 })
 const Order = mongoose.models.order ||mongoose.model("Order",orderSchema)
