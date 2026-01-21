@@ -8,7 +8,7 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 
 
 const createToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET)
+    return jwt.sign({ userId: id }, process.env.JWT_SECRET)
 }
 //Route for user login
 const loginUser = asyncHandler(async (req, res) => {
@@ -58,7 +58,7 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!validator.isEmail(email)) {
         throw new ApiError(400, "Invalid email")
     }
-    if (password.length < 8 || !validator.isStrongPassword(password)) {
+    if (password.length < 8) {
         throw new ApiError(400, "Please enter a strong password")
     }
 

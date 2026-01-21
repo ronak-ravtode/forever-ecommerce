@@ -14,11 +14,10 @@ const Login = ({setToken}) => {
         try {
             e.preventDefault()
             const response = await axios.post(backend_url + '/api/user/admin/login', {email, password})
-            
             if(!response.data.success){
                 toast.error(response.data.message)
             }
-            setToken(response.data.token)
+            setToken(response.data.data.token)
         } catch (error) {
             toast.error(error.message)
         }
