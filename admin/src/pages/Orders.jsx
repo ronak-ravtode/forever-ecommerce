@@ -14,7 +14,7 @@ const Orders = ({ token }) => {
     if (!token) return null
     try {
       const response = await axios.post(`${backend_url}/api/order/list`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `${token}` }
       })
       if (response.data.success) {
         setOrders(response.data.data)
@@ -28,7 +28,7 @@ const Orders = ({ token }) => {
   const statusHandler = async(e,orderId) => {
     try {
       const response = await axios.post(`${backend_url}/api/order/status`, {orderId, status: e.target.value}, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `${token}` }
       })
       if(response.data.success){
         await fetchAllOrders()

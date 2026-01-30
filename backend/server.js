@@ -10,7 +10,7 @@ import CartRouter from "./routes/cart.route.js";
 import orderRouter from "./routes/order.route.js";
 //App config
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 connectDB()
 connectCloudinary()
 
@@ -19,7 +19,8 @@ const allowedOrigins = [
     'https://forever-ecommerce-lilac.vercel.app',
     'https://forever-ecommerce-frontend-one.vercel.app',
     'http://localhost:3000',
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://localhost:5174',
 ];
 
 app.use(cors({
@@ -42,22 +43,18 @@ app.use('/api/product',productRouter)
 app.use('/api/cart',CartRouter)
 app.use('/api/order',orderRouter)
 
-// app.use((req, res, next) => {
-//     next(new ApiError(404, "Route not found"))
-// })
+app.use((err, req, res, next) => {
+    const statusCode = err?.statusCode || 500
+    const message = err?.message || "Internal server error"
 
-// app.use((err, req, res, next) => {
-//     const statusCode = err?.statusCode || 500
-//     const message = err?.message || "Internal server error"
-
-//     return res.status(statusCode).json({
-//         success: false,
-//         statusCode,
-//         message,
-//         errors: err?.errors || [],
-//         data: null,
-//     })
-// })
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message,
+        errors: err?.errors || [],
+        data: null,
+    })
+})
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
