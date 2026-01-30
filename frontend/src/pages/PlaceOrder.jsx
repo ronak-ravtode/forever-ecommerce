@@ -9,6 +9,15 @@ const PlaceOrder = () => {
 
   const [method, setMethod] = useState('cod')
   const { navigate, backend_url, token, cartItems, setCartItems, getCartAmount, delivery_fee, products } = useContext(ShopContext)
+
+  // Check if user is logged in and redirect if not
+  React.useEffect(() => {
+    if(!token){
+      navigate('/login')
+      toast.error('Please login first')
+    }
+  }, [token, navigate])
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
