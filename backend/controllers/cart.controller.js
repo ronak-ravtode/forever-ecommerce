@@ -8,7 +8,7 @@ const addToCart = asyncHandler(async(req, res) => {
     const userId = req.userId
     const userData = await User.findById(userId)
     if(!userData){
-        throw new ApiError(404,"User not found")
+        throw new ApiError(404,"Please login first");
     }
     const cartData = userData.cartData
     if(cartData[itemId]){
@@ -32,7 +32,13 @@ const updateCart = asyncHandler(async(req, res) => {
     const userId = req.userId
 
     const userData = await User.findById(userId)
-    let cartData = userData.cartData
+    if(!userData){
+        throw new ApiError(404,"Please login first");
+    }
+    let cartData = userData.cartData || {}
+    if(!cartData[itemId]){
+        cartData[itemId] = {}
+    }
     cartData[itemId][size] = quantity
    await User.findByIdAndUpdate(userId,{cartData})
    res.status(200).json(new ApiResponse(200,"Item updated to cart successfully",cartData))
@@ -41,7 +47,10 @@ const updateCart = asyncHandler(async(req, res) => {
 const getCart = asyncHandler(async(req, res) => {
     const userId = req.userId
     const userData = await User.findById(userId)
-    let cartData = userData.cartData
+    if(!userData){
+        throw new ApiError(404,"Please login first");
+    }
+    let cartData = userData.cartData || {}
     res.status(200).json(new ApiResponse(200,"Cart fetched successfully",cartData))
 })
 

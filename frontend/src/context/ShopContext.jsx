@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
@@ -16,6 +15,19 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([])
     const [token, setToken] = useState('')
     const navigate = useNavigate()
+
+    const isJwtExpired = (jwtToken) => {
+        if (!jwtToken) return true
+        const parts = jwtToken.split('.')
+        if (parts.length !== 3) return true
+        try {
+            const payload = JSON.parse(atob(parts[1]))
+            if (!payload?.exp) return false
+            return payload.exp * 1000 < Date.now()
+        } catch (e) {
+            return true
+        }
+    }
 
     const addToCart = async (itemId, size) => {
 
@@ -125,9 +137,36 @@ const ShopContextProvider = (props) => {
     useEffect(() => {
         if (!token && localStorage.getItem('token')) {
             const storedToken = localStorage.getItem('token');
-            setToken(storedToken);
+            if (isJwtExpired(storedToken)) {
+                localStorage.removeItem('token')
+                localStorage.removeItem('userId')
+                setToken('')
+                setCartItems({})
+            } else {
+                setToken(storedToken);
+            }
         }
     }, [])
+
+    useEffect(() => {
+        const interceptorId = axios.interceptors.response.use(
+            (response) => response,
+            (error) => {
+                if (error?.response?.status === 401) {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('userId')
+                    setToken('')
+                    setCartItems({})
+                    navigate('/login')
+                }
+                return Promise.reject(error)
+            }
+        )
+
+        return () => {
+            axios.interceptors.response.eject(interceptorId)
+        }
+    }, [navigate])
 
     useEffect(() => {
         if (token) {

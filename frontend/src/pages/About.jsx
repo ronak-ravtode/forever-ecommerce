@@ -2,6 +2,7 @@ import React from 'react'
 import Title from '../components/Title'
 import {assets} from '../assets/frontend_assets/assets'
 import NewsLetterBox from '../components/NewsLetterBox'
+import ImageWithSkeleton from '../components/ImageWithSkeleton'
 
 const About = () => {
   return (
@@ -10,7 +11,7 @@ const About = () => {
         <Title text1="ABOUT" text2="US" />
       </div>
       <div className='my-10 flex flex-col md:flex-row gap-16'>
-        <img src={assets.about_img} className='w-full md:max-w-[450px]' alt="" />
+        <ImageWithSkeleton src={assets.about_img} className='w-full md:max-w-[450px]' skeletonClassName='w-full h-[320px] md:w-[450px] md:h-[320px]' alt="" />
         <div className='flex flex-col gap-6 justify-center md:w-2/4 text-gray-600'>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero dolores, facere doloribus sint harum, minima non nesciunt, quibusdam atque corrupti doloremque omnis maiores tempora asperiores nisi natus eos. Non pariatur optio asperiores totam dolores vel?</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi nulla veniam unde voluptatum eos doloremque ducimus veritatis reprehenderit distinctio autem. Ad, aliquam iure ut omnis tempora mollitia assumenda officia voluptates doloribus quis enim autem tenetur?</p>

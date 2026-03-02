@@ -3,6 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/frontend_assets/assets'
 import Title from '../components/Title'
 import ProductItem from '../components/ProductItem'
+import ImageWithSkeleton from '../components/ImageWithSkeleton'
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext)
@@ -73,7 +74,7 @@ const Collection = () => {
       {/* Filter Options */}
       <div className='min-w-60 sticky top-32 self-start'>
         <p onClick={() => setShowFilters(!showFilters)} className='my-2 text-xl flex items-center cursor-pointer gap-2'>FILTERS
-          <img src={assets.dropdown_icon} className={`h-3 sm:hidden ${showFilters ? 'rotate-90' : ''}`} alt="" />
+          <ImageWithSkeleton src={assets.dropdown_icon} className={`h-3 sm:hidden ${showFilters ? 'rotate-90' : ''}`} skeletonClassName='w-3 h-3 sm:hidden' alt="" />
         </p>
         {/* Category Filter */}
         <div className={`border border-gray-300 pl-5 py-3 mt-6 ${showFilters ? '' : 'hidden'} sm:block`}>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { assets } from '../assets/frontend_assets/assets'
+import ImageWithSkeleton from './ImageWithSkeleton'
 
 const Hero = () => {
   return (
@@ -19,7 +20,7 @@ const Hero = () => {
             </div>
         </div>
         {/* right side */}
-        <img src={assets.hero_img} className='w-full sm:w-1/2' alt="" />
+        <ImageWithSkeleton src={assets.hero_img} className='max-h-[90vh] mx-auto' alt="" />
     </div>
   )
 }

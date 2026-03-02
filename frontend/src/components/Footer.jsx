@@ -1,11 +1,12 @@
 import React from 'react'
 import { assets } from '../assets/frontend_assets/assets'
+import ImageWithSkeleton from './ImageWithSkeleton'
 const Footer = () => {
   return (
     <div>
       <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
         <div>
-          <img src={assets.logo} alt="" />
+          <ImageWithSkeleton src={assets.logo} className='' skeletonClassName='w-36 h-10' alt="" />
           <p className='w-full md:w-2/3 text-gray-600'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis quia pariatur voluptas magni sunt eligendi, incidunt itaque repudiandae? Dolorum ab autem illo asperiores, laudantium omnis sed exercitationem hic reiciendis quisquam quis cumque vero. Aliquam, beatae.</p>
         </div>
         <div>

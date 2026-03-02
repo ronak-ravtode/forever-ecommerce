@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 import { assets } from '../assets/frontend_assets/assets'
 import RelatedProduct from '../components/RelatedProduct'
+import ImageWithSkeleton from '../components/ImageWithSkeleton'
 
 const Product = () => {
 
@@ -35,23 +36,23 @@ const Product = () => {
           <div className='flex flex-col overflow-x-auto md:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full'>
             {
               productData.image.map((item, idx) => (
-                <img onClick={() => setImage(item)} src={item} key={idx} className='w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer' alt="" />
+                <ImageWithSkeleton onClick={() => setImage(item)} src={item} key={idx} className='w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer' skeletonClassName='w-[24%] h-20 sm:w-full sm:h-24' alt="" />
               ))
             }
           </div>
           <div className='w-full sm:w-[80%]'>
-            <img src={image} className='w-full h-auto' alt="" />
+            <ImageWithSkeleton src={image} className='w-full h-auto' skeletonClassName='w-full h-[420px]' alt="" />
           </div>
         </div>
         {/* Product Info */}
         <div className='flex-1'>
           <h1 className='text-2xl font-medium mt-2'>{productData.name}</h1>
           <div className='flex items-center gap-1 mt-2'>
-            <img src={assets.star_icon} className='w-3' alt="" />
-            <img src={assets.star_icon} className='w-3' alt="" />
-            <img src={assets.star_icon} className='w-3' alt="" />
-            <img src={assets.star_icon} className='w-3' alt="" />
-            <img src={assets.star_dull_icon} className='w-3' alt="" />
+            <ImageWithSkeleton src={assets.star_icon} className='w-3' skeletonClassName='w-3 h-3' alt="" />
+            <ImageWithSkeleton src={assets.star_icon} className='w-3' skeletonClassName='w-3 h-3' alt="" />
+            <ImageWithSkeleton src={assets.star_icon} className='w-3' skeletonClassName='w-3 h-3' alt="" />
+            <ImageWithSkeleton src={assets.star_icon} className='w-3' skeletonClassName='w-3 h-3' alt="" />
+            <ImageWithSkeleton src={assets.star_dull_icon} className='w-3' skeletonClassName='w-3 h-3' alt="" />
             <p className='pl-2'>(122)</p>
           </div>
           <p className='mt-5 text-3xl font-medium'>{currency}{productData.price}</p>

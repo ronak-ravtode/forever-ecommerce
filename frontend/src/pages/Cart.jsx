@@ -3,6 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 import { assets } from '../assets/frontend_assets/assets'
 import CartTotal from '../components/CartTotal'
+import ImageWithSkeleton from '../components/ImageWithSkeleton'
 
 const Cart = () => {
   const { products, currency, cartItems,setCartItems,updateQuantity,navigate } = useContext(ShopContext)
@@ -37,7 +38,7 @@ const Cart = () => {
           return (
             <div key={idx} className='py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4'>
               <div className='flex items-center gap-6'>
-                <img src={productData.image[0]} className='w-16 sm:w-20' alt="" />
+                <ImageWithSkeleton src={productData.image[0]} className='w-16 sm:w-20' skeletonClassName='w-16 h-16 sm:w-20 sm:h-20' alt="" />
                 <div>
                   <p className='text-xs sm:text-lg font-medium'>{productData.name}</p>
                   <div className='flex items-center gap-5 mt-2'>
@@ -47,7 +48,7 @@ const Cart = () => {
                 </div>
               </div>
               <input onChange={(e)=> e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item._id,item.size,Number(e.target.value))} className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1' type="number" min={1} defaultValue={item.quantity} />
-              <img src={assets.bin_icon} className='w-4 mr-4 sm:w-5 cursor-pointer' onClick={() => updateQuantity(item._id, item.size, 0)} alt="" />
+              <ImageWithSkeleton src={assets.bin_icon} className='w-4 mr-4 sm:w-5 cursor-pointer' skeletonClassName='w-4 h-4 sm:w-5 sm:h-5' onClick={() => updateQuantity(item._id, item.size, 0)} alt="" />
             </div>
           )
         })}
